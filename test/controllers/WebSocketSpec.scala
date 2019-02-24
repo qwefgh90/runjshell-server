@@ -1,4 +1,4 @@
-package controllers
+package test.controllers
 
 import java.util.concurrent.{ArrayBlockingQueue, Callable}
 import java.util.function.Consumer
@@ -7,8 +7,10 @@ import play.shaded.ahc.org.asynchttpclient.AsyncHttpClient
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.play._
+import play.api.Logger
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.{Helpers, TestServer, WsTestClient}
+import test.util.WebSocketClient
 
 import scala.concurrent.{Future, blocking}
 //import org.awaitility.Awaitility._
@@ -63,6 +65,40 @@ class WebSocketSpec extends PlaySpec with ScalaFutures {
         }
       }
     }
+
+//    "close connection after timeout" in WsTestClient.withClient { client =>
+//      lazy val port: Int = 31338
+//      val app = new GuiceApplicationBuilder()
+//        .configure("play.server.http.idleTimeout" -> "2s")
+//        .build()
+//      Helpers.running(TestServer(port, app)) {
+//        val myPublicAddress = s"localhost:$port"
+//        val serverURL = s"ws://$myPublicAddress/ws"
+//        val queue = new ArrayBlockingQueue[String](10)
+//        val asyncHttpClient: AsyncHttpClient = client.underlying[AsyncHttpClient]
+//        val webSocketClient = new WebSocketClient(asyncHttpClient)
+//        try {
+//          val origin = serverURL
+//          val consumer: Consumer[String] = new Consumer[String] {
+//            override def accept(message: String): Unit = queue.put(message)
+//          }
+//          val listener = new WebSocketClient.LoggingListener(consumer)
+//          val completionStage = webSocketClient.call(serverURL, origin, listener)
+//          val f = FutureConverters.toScala(completionStage)
+//          whenReady(f, timeout = Timeout(2.second)) { webSocket =>
+//            webSocket.isOpen mustBe true
+//            Thread.sleep(10000)
+//            Logger.debug("Closed??")
+//            webSocket.isOpen mustBe false
+//          }
+//        } catch {
+//          case e: IllegalStateException =>
+//            fail("Something's wrong.",e)
+//          case e: java.util.concurrent.ExecutionException =>
+//            fail("Something's wrong.",e)
+//        }
+//      }
+//    }
   }
 
 }

@@ -1,4 +1,4 @@
-package controllers;
+package test.util;
 
 import org.eclipse.jetty.websocket.api.WebSocketConnectionListener;
 import play.shaded.ahc.org.asynchttpclient.AsyncHttpClient;
@@ -34,7 +34,7 @@ public class WebSocketClient {
         return future.toCompletableFuture();
     }
 
-    static class LoggingListener implements WebSocketTextListener {
+    public static class LoggingListener implements WebSocketTextListener {
         private final Consumer<String> onMessageCallback;
 
         public LoggingListener(Consumer<String> onMessageCallback) {
@@ -52,12 +52,13 @@ public class WebSocketClient {
 
         @Override
         public void onOpen(WebSocket websocket) {
+            logger.debug("onOpen: ");
             isOpen = true;
         }
 
         @Override
         public void onClose(WebSocket websocket) {
-            //logger.info("onClose: ");
+            logger.debug("onClose: ");
         }
 
         @Override
