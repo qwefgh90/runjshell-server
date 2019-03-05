@@ -39,7 +39,7 @@ public class WebSocketTest {
     private String URL;
 
     private static final String SEND = "/app/req";
-    private static final String RECEIVE = "/topic/res";
+    private static final String RECEIVE = "/user/topic/res";
 
     private CompletableFuture<BrowserResponse> completableFuture;
 
